@@ -7,8 +7,8 @@ from openpyxl.chart import BarChart, Reference
 def process_workbook(filename):
     wb = xl.load_workbook(filename)
     sheet = wb['Sheet1']
-    for item in 10:
-        randword = random.randint(1,sheet.max_row )
+    for item in range(10):
+        randword = random.randint(1,sheet.max_row - 1 )
         cell = sheet.cell(randword,1)
         print(cell.value)
 
