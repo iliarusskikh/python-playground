@@ -17,6 +17,7 @@ def get_posts():
     except requests.RequestException as e:
         print(f"GET Request failed: {e}")
 
+
 def create_post():
     """Create a new post using a POST request."""
     url = "https://jsonplaceholder.typicode.com/posts"
@@ -37,6 +38,7 @@ def create_post():
             print(f"Error: {response.text}")
     except requests.RequestException as e:
         print(f"POST Request failed: {e}")
+
 
 def update_post(post_id):
     """Update an existing post using a PUT request."""
@@ -79,9 +81,9 @@ def main():
     """Run all example requests."""
     print("=== Requests Library Practice Script ===")
     get_posts()
-    create_post()
-    update_post(1)
-    delete_post(1)
+    #create_post()
+    #update_post(1)
+    #delete_post(2)
 
 if __name__ == "__main__":
     main()
