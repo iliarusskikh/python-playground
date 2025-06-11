@@ -11,3 +11,4 @@ dist/
 .history/*
 .coverage
 .DS_Store
+.venv
