@@ -1,0 +1,7 @@
+body h1, body p {
+    color: #aaffba;
+}
+
+body {
+    background-color: #333; /* Dark background to make light text visible */
+}
