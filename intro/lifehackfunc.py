@@ -504,3 +504,121 @@ show = [1,0,1] #sets true and false
 compressed_list = itertools.compress(names, show)
 print(list(compressed_list))#if 0 then not printed
 
+
+
+""" _____________________________________________________"""
+
+languages =['Python', 'Java', 'C++', 'C']
+level =['1', '5', '4', '2']
+
+
+for index, value in enumerate(languages):
+    pass
+
+for lvl, lang in zip(level, languages):
+    pass
+    
+""" _____________________________________________________"""
+
+#dunder methods
+
+str1 = "hello"
+str2 = "world"
+new_str = str1.__add__(str2)
+new_cnt = new_str.__len__()
+
+
+class Car:
+    def __init__ (self,make, model, year)
+        self.make = make
+        self.model = model
+        self.year = year
+        
+    def __str__(self):
+        return f"{self.year} {self.make} {self.model}"
+        
+    def __repr__(self):
+        return f"Car(make='{self.make}', model='{self.model}', year={self.year}"
+    
+    def __add__(self,other):
+        if isinstance(other, Car) and self.make == other.make:
+            return Car(self.make, self.model, self.year + other.year)#for example
+        raise ValueError("Cannot add items of different types.")
+        
+        
+    
+my_car = Car('Toyota', 'Camry',2012)
+
+#print(str(my_car))
+#print(repr(my_car))
+
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.size = 0
+        
+    def __len__(self):
+        return self.size
+    
+    def __getitem__(self,index):
+        if index <0 or index >= self.size:
+            raise IndexError("Index out of range.")
+        current = self.head
+        for _ in range(index):
+            current = current.next
+        return current.value
+        
+    def __setitem__(self, index, value):
+        if index < 0 or index >= self.size:
+            raise IndexError("Index out of range")
+        current = self.head
+        for _ in range(index):
+            current = current.next
+        current.value = value
+        
+        
+     def __delitem__(self, index):
+        if index < 0 or index >= self.size:
+            raise IndexError("Index out of range")
+        if index == 0:
+            self.head = self.head.next
+        else:
+            current = self.head
+            for _ in range(index-1):
+                current = current.next
+            current.next = current.next.next
+        self.size -=1
+        
+    def __contains__(self, value):
+        current = self.head
+        while current:
+            if current.value == value:
+                return True
+            current = current.next
+        return False
+        
+    def append(self,value):
+        new_node =Node(value)
+        if not self.head:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+        self.size +=1
+        
+    def __str__(self):
+        values = []
+        current = self.head
+        while current:
+            values.append(str(current.value))
+            current = current.next
+        return "- >".join(values)
+        
+l1 = LinkedList()
+l1.append(10)
+l1.append(40)
+#print(len(l1))
