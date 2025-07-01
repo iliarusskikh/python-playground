@@ -17,3 +17,11 @@ n1[1:4] = ['a','b','c']
 
 lst = sorted(n1, key=lambda x: (isinstance(x, int), x), reverse = True)
 
+
+
+
+#append one list to another
+
+numbers = [1,2,3]
+numbers.extend(list([4,5]))
+print(numbers)
