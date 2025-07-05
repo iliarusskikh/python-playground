@@ -1,3 +1,23 @@
+# Docker-playground
+
+### Commands
+docker run -d -p 80:80 docker/getting-started
+docker images //lists all Docker images
+docker ps //list running containers
+docker pull "package" 
+docker scout quickview "package"
+docker logs "container_id"
+docker run "package" //run without installing locally
+docker stop "container_id"        
+docker run -d -p 9000:80 "package"//port binding localhost:9000
+docker ps -a //all created containers
+docker start "container_id"
+docker run --name web-app -d -p 9000:80 nginx:1.23
+docker stop web-app
+
+docker build -t mcp-app:1.0 . // . is the current location
+
+
 # MCP Server with Docker
 
 This project demonstrates how to run an MCP (Model Control Protocol) server using Docker. The server provides a simple calculator tool that can be accessed by a client.
