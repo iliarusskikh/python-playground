@@ -1,9 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
+**.py[cod]
 
 # C extensions
-*.so
+**.so
 
 # Distribution / packaging
 .Python
@@ -19,9 +19,9 @@ lib64/
 parts/
 sdist/
 var/
-*.egg-info/
+**.egg-info/
 .installed.cfg
-*.egg
+**.egg
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -41,14 +41,14 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
-*.cover
+**.cover
 
 # Translations
-*.mo
-*.pot
+**.mo
+**.pot
 
 # Django stuff:
-*.log
+**.log
 
 # Sphinx documentation
 docs/_build/
@@ -60,15 +60,15 @@ target/
 .env
 
 # Database
-*.db
-*.rdb
+**.db
+**.rdb
 
 # Pycharm
 .idea
 
 # VS Code
 .vscode/
-*.code-workspace
+**.code-workspace
 
 # Spyder
 .spyproject/
@@ -80,8 +80,8 @@ target/
 .DS_Store
 
 # vim
-*.swp
-*.swo
+**.swp
+**.swo
 
 # Mypy cache
 .mypy_cache/
