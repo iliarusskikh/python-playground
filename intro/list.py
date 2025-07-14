@@ -25,3 +25,13 @@ lst = sorted(n1, key=lambda x: (isinstance(x, int), x), reverse = True)
 numbers = [1,2,3]
 numbers.extend(list([4,5]))
 print(numbers)
+
+
+people: list[str] = ['Mario', 'Elon', 'Gary', 'Elon', 'john']
+print(people.count('ELon'))
+
+people.insert(1, 'Luigi')
+
+people.sort(key: lambda name: name.lower())
+people.sort(key: lambda name: len(name))
+
