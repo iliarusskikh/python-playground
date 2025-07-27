@@ -35,3 +35,39 @@ people.insert(1, 'Luigi')
 people.sort(key: lambda name: name.lower())
 people.sort(key: lambda name: len(name))
 
+
+
+#problem 1
+items = [1,2,3]
+items.insert(0,0)# O(n) time-complexity, not gud!
+#fix
+from collections import deque#const time insertion and removal
+
+items = deque()
+for i in range(10_000):
+    items.appendleft(i)
+
+
+#problem 2
+values = [1,2,3,4,5,... , 1_000_000] # O(n) search
+if 999_999 in values:
+    pass
+#fix
+values = set(values)#const time insertion,deletion and lookup
+if 999_999 in values:
+    pass
+
+
+
+#problem 3
+"hello" + "!" # O(n) + O(m)
+
+res = "" #immutable
+for i in range(1,10001):
+    res += str(i) + ","
+    
+#fix
+parts =[]#mutable
+for i in range(1, 10001):
+    parts.append(str(i) + ",")#const time to append
+res = "".join(parts)#turn list into a string
