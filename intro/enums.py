@@ -108,4 +108,3 @@ for x in range(len(m_list)):
 
 for index, element in enumerate(my_list):
     print(x,element)
-
