@@ -20,3 +20,13 @@ if __name__ == "__main__":
 
 #uv add numpy
 #uv run .\main.py
+
+#{
+#    "mcpServers": {
+#        "google-sheets": {
+#            "command": "uvx",
+#            "args": ["mcp-google-sheets@latest"]
+#        }
+#    }
+#}
+
