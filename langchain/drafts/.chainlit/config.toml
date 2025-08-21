@@ -2,6 +2,9 @@
 # List of environment variables to be provided by each user to use the app.
 user_env = []
 
+persistance = true
+authentication = true
+
 # Duration (in seconds) during which the session is saved when the connection is lost
 session_timeout = 3600
 
@@ -51,8 +54,14 @@ reaction_on_message_received = false
     max_size_mb = 500
 
 [features.audio]
+    # Enable audio features
+    enabled = false
     # Sample rate of the audio
     sample_rate = 24000
+
+[features.mcp]
+    # Enable Model Context Protocol (MCP) features
+    enabled = false
 
 [features.mcp.sse]
     enabled = true
@@ -115,7 +124,7 @@ alert_style = "classic"
 logo_file_url = ""
 
 # Load assistant avatar image directly from URL.
-default_avatar_file_url = "https://www.google.com/search?sca_esv=0a74b9f5a5d821da&sxsrf=AE3TifO52tv2Xars5pip2d4QpBQdssQlBA:1755711657779&udm=2&fbs=AIIjpHxU7SXXniUZfeShr2fp4giZ1Y6MJ25_tmWITc7uy4KIemkjk18Cn72Gp24fGkjjh6xc8y8oU3IJovU34XDyOFvE0X8cOr8Z_8IAmr4gJetqjLcq9TS-FbodE2o26UfJ0smxVEOKA8L3Fu9P36lGwCBsf06KzS0kHnk8m7Hgh5T3l-iPEn3NpJVgkpjbnn0UApEOto-FYKf3xCDNXSxbk1tqSsIl7w&q=tenten+naruto&sa=X&ved=2ahUKEwiTocLN95mPAxUqW0EAHQFqAlYQtKgLegQIExAB&biw=1728&bih=873&dpr=2#vhid=_WYRN3mQbyb75M&vssid=mosaic"
+default_avatar_file_url = ""
 
 # Specify a custom build directory for the frontend.
 # This can be used to customize the frontend code.
@@ -130,4 +139,11 @@ default_avatar_file_url = "https://www.google.com/search?sca_esv=0a74b9f5a5d821d
 #     url = "https://github.com/Chainlit/chainlit/issues"
 
 [meta]
-generated_by = "2.6.9"
+generated_by = "2.7.1.1"
+
+
+[persistence]
+enabled = true
+
+[authentication]
+enabled = true

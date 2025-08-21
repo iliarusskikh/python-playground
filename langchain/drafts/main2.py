@@ -6,72 +6,65 @@ from typing import Dict, List, Optional
 import chainlit as cl
 import chainlit.data as cl_data
 from chainlit.data.utils import queue_until_user_message
+from chainlit.step import StepDict
+from chainlit.types import Feedback, PaginatedResponse, Pagination, ThreadDict, ThreadFilter, PageInfo
+from chainlit.utils import utc_now
 from chainlit.element import Element, ElementDict
 from chainlit.socket import persist_user_session
-from chainlit.step import StepDict
-from chainlit.types import (
-    Feedback,
-    PageInfo,
-    PaginatedResponse,
-    Pagination,
-    ThreadDict,
-    ThreadFilter,
-)
-from chainlit.utils import utc_now
 
-os.environ["CHAINLIT_AUTH_SECRET"] = "SUPER_SECRET"  # nosec B105
+# os.environ["CHAINLIT_AUTH_SECRET"] = "SUPER_SECRET"
 
 now = utc_now()
 
 thread_history = [
-    {
-        "id": "test1",
-        "name": "thread 1",
-        "createdAt": now,
-        "userId": "test",
-        "userIdentifier": "admin",
-        "steps": [
-            {
-                "id": "test1",
-                "name": "test",
-                "createdAt": now,
-                "type": "user_message",
-                "output": "Message 1",
-            },
-            {
-                "id": "test2",
-                "name": "test",
-                "createdAt": now,
-                "type": "assistant_message",
-                "output": "Message 2",
-            },
-        ],
-    },
-    {
-        "id": "test2",
-        "createdAt": now,
-        "userId": "test",
-        "userIdentifier": "admin",
-        "name": "thread 2",
-        "steps": [
-            {
-                "id": "test3",
-                "createdAt": now,
-                "name": "test",
-                "type": "user_message",
-                "output": "Message 3",
-            },
-            {
-                "id": "test4",
-                "createdAt": now,
-                "name": "test",
-                "type": "assistant_message",
-                "output": "Message 4",
-            },
-        ],
-    },
-]  # type: List[ThreadDict]
-deleted_thread_ids = []  # type: List[str]
+    # {
+    #     "id": "test1",
+    #     "name": "thread 1",
+    #     "createdAt": now,
+    #     "userId": "test",
+    #     "userIdentifier": "admin",
+    #     "steps": [
+    #         {
+    #             "id": "test1",
+    #             "name": "test",
+    #             "createdAt": now,
+    #             "type": "user_message",
+    #             "output": "Message 1",
+    #         },
+    #         {
+    #             "id": "test2",
+    #             "name": "test",
+    #             "createdAt": now,
+    #             "type": "assistant_message",
+    #             "output": "Message 2",
+    #         },
+    #     ],
+    # },
+    # {
+    #     "id": "test2",
+    #     "createdAt": now,
+    #     "userId": "test",
+    #     "userIdentifier": "admin",
+    #     "name": "thread 2",
+    #     "steps": [
+    #         {
+    #             "id": "test3",
+    #             "createdAt": now,
+    #             "name": "test",
+    #             "type": "user_message",
+    #             "output": "Message 3",
+    #         },
+    #         {
+    #             "id": "test4",
+    #             "createdAt": now,
+    #             "name": "test",
+    #             "type": "assistant_message",
+    #             "output": "Message 4",
+    #         },
+    #     ],
+    # },
+]
+deleted_thread_ids = []
 
 THREAD_HISTORY_PICKLE_PATH = os.path.join(
     os.path.dirname(__file__), "thread_history.pickle"
@@ -82,11 +75,9 @@ if THREAD_HISTORY_PICKLE_PATH and os.path.exists(THREAD_HISTORY_PICKLE_PATH):
 
 
 async def save_thread_history():
-    # Force saving of thread history for reload when server restarts
     await persist_user_session(
         cl.context.session.thread_id, cl.context.session.to_persistable()
     )
-
     with open(THREAD_HISTORY_PICKLE_PATH, "wb") as out_file:
         pickle.dump(thread_history, out_file)
 
@@ -130,10 +121,6 @@ class TestDataLayer(cl_data.BaseDataLayer):
 
     @cl_data.queue_until_user_message()
     async def create_step(self, step_dict: StepDict):
-        cl.user_session.set(
-            "create_step_counter", cl.user_session.get("create_step_counter") + 1
-        )
-
         thread = next(
             (t for t in thread_history if t["id"] == step_dict.get("threadId")), None
         )
@@ -161,25 +148,17 @@ class TestDataLayer(cl_data.BaseDataLayer):
     async def delete_thread(self, thread_id: str):
         deleted_thread_ids.append(thread_id)
 
-    async def delete_feedback(
-        self,
-        feedback_id: str,
-    ) -> bool:
+    async def delete_feedback(self, feedback_id: str) -> bool:
         return True
 
-    async def upsert_feedback(
-        self,
-        feedback: Feedback,
-    ) -> str:
+    async def upsert_feedback(self, feedback: Feedback) -> str:
         return ""
 
     @queue_until_user_message()
-    async def create_element(self, element: "Element"):
+    async def create_element(self, element: Element):
         pass
 
-    async def get_element(
-        self, thread_id: str, element_id: str
-    ) -> Optional["ElementDict"]:
+    async def get_element(self, thread_id: str, element_id: str) -> Optional[ElementDict]:
         pass
 
     @queue_until_user_message()
@@ -187,7 +166,7 @@ class TestDataLayer(cl_data.BaseDataLayer):
         pass
 
     @queue_until_user_message()
-    async def update_step(self, step_dict: "StepDict"):
+    async def update_step(self, step_dict: StepDict):
         pass
 
     @queue_until_user_message()
@@ -203,29 +182,14 @@ def data_layer():
     return TestDataLayer()
 
 
-async def send_count():
-    create_step_counter = cl.user_session.get("create_step_counter")
-    await cl.Message(f"Create step counter: {create_step_counter}").send()
-
-
 @cl.on_chat_start
 async def main():
-    # Add step counter to session so that it is saved in thread metadata
-    cl.user_session.set("create_step_counter", 0)
     await cl.Message("Hello, send me a message!").send()
-    await send_count()
 
 
 @cl.on_message
 async def handle_message():
-    # Wait for queue to be flushed
-    await cl.sleep(2)
-    await send_count()
-    async with cl.Step(type="tool", name="thinking") as step:
-        step.output = "Thinking..."
-    await cl.Message("Ok!").send()
-    await send_count()
-
+    await cl.Message("Hello World").send()
     await save_thread_history()
 
 
@@ -233,8 +197,7 @@ async def handle_message():
 def auth_callback(username: str, password: str) -> Optional[cl.User]:
     if (username, password) == ("admin", "admin"):
         return cl.User(identifier="admin")
-    else:
-        return None
+    return None
 
 
 @cl.on_chat_resume
