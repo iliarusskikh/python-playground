@@ -103,3 +103,5 @@ temp/
 
 # Exclude Qdrant data
 qdrant_data/
+
+**.pickle
